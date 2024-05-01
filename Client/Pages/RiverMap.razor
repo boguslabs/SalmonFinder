@@ -7,11 +7,14 @@
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
+
 <h3>Overall Map</h3>
 
 <p>This is where we'll put the big map!</p>
 
-<div id = "map"></div>
+<div id="map"></div>
+
+<p>the map is above</p>
 
 <script>
   (g=>
@@ -31,6 +34,7 @@
 <script>
 
 async function initMap() {
+  let map;
   
   const position = { lat: -25.344, lng: 131.031 };
   const { Map } = await google.maps.importLibrary("maps");
@@ -39,7 +43,7 @@ async function initMap() {
   map = new Map(document.getElementById("map"), {
     center: { lat: -34.397, lng: 150.644 },
     zoom: 8,
-    mapId: "Demo map",
+    mapId: "Salmon Finder",
   });
 
   const marker = new AdvancedMarkerElement({
@@ -47,6 +51,7 @@ async function initMap() {
     position: position,
     title: "Alaska",
   });
+
 }
 
 initMap(); 
