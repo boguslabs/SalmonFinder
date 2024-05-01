@@ -29,7 +29,7 @@ protected override async Task OnInitializedAsync()
                  List<string> riverStringList = riversRows[i].Split(",").ToList();
                  
                  River river = new River(
-                     riverStringList[0],f
+                     riverStringList[0],
                      int.Parse(riverStringList[1]),
                      int.Parse(riverStringList[2])
                  );
