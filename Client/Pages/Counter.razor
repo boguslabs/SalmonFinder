@@ -20,7 +20,7 @@
     List<River> listOfRivers = new List<River>();
 protected override async Task OnInitializedAsync()
     {
-        string csvRivers = await Http.GetStringAsync("sample-data/Salmon Fish Data - Alaska.csv");
+        string csvRivers = await Http.GetStringAsync("http://localhost:5000/sample-data/Salmon Fish Data - Alaska.csv");
         List<string> riversRows = csvRivers.Split("\n").ToList();
         for (int i = 0; i < riversRows.Count; i++)
         {
@@ -29,8 +29,8 @@ protected override async Task OnInitializedAsync()
                  List<string> riverStringList = riversRows[i].Split(",").ToList();
                  
                  River river = new River(
-                     riverStringList[0],
-                     DateOnly.Parse(riverStringList[1]),
+                     riverStringList[0],f
+                     int.Parse(riverStringList[1]),
                      int.Parse(riverStringList[2])
                  );
                 listOfRivers.Add(river);
