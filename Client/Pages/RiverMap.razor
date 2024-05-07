@@ -35,26 +35,51 @@
 async function initMap() {
   let map;
   
-  const position = { lat: 60.3886, lng: -144.9608 };
+  const initialPosition = { lat: 61.2176, lng: -149.8997 };
+  const markerPositions = [
+    { lat: 60.3886, lng: -144.9608 }, // Copper River
+    { lat: 60.5439, lng: -151.2786 }, // Kenai River
+    { lat: 58.7994, lng: -158.6325 }, // Nushagak River
+    { lat: 58.7186, lng: -157.0656 }, // Naknek River
+    // Add more marker positions here
+  ];
+
   const { Map } = await google.maps.importLibrary("maps");
-  const { PlacesService } = await google.maps.importLibrary("places");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
   map = new Map(document.getElementById("map"), {
-    center: { lat: 60.3886, lng: -144.9608 },
-    zoom: 10,
+    center: initialPosition,
+    zoom: 4,
     mapId: "Salmon Finder",
   });
 
-  const marker = new AdvancedMarkerElement({
-    map: map,
-    position: position,
-    title: "Alaska",
+  // Create markers for each position
+  markerPositions.forEach(position => {
+    new AdvancedMarkerElement({
+      map: map,
+      position: position,
+      title: "Marker",
+    });
   });
 
- map.addListener("click", (e) => {
-    getRiverName(e.latLng, map);
-    
+
+    // Add click event listener to each marker (This is the stuff that Chat GPT recommended, but it broke when I tried it)
+  @*  marker.addListener("click", () => {
+      getRiverName(position);
+    });
+  });
+
+  map.addListener("click", (e) => {
+    getRiverName(e.latLng);
+  });
+} *@
+
+// In this modified version, after creating each marker, I've attached a click event listener to it. 
+// When a marker is clicked, the getRiverName function will be called with the marker's position as an argument.
+// Now, when you click on any of the markers on the map, it will trigger the getRiverName function with the corresponding marker's position.
+
+  map.addListener("click", (e) => {
+    getRiverName(e.latLng);
   });
 }
 
