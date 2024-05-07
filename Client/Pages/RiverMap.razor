@@ -46,6 +46,7 @@ async function initMap() {
 
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+  const {PlacesService} = await google.maps.importLibrary("places");
 
   map = new Map(document.getElementById("map"), {
     center: initialPosition,
@@ -79,7 +80,7 @@ async function initMap() {
 // Now, when you click on any of the markers on the map, it will trigger the getRiverName function with the corresponding marker's position.
 
   map.addListener("click", (e) => {
-    getRiverName(e.latLng);
+    getRiverName(e.latLng, map);
   });
 }
 
@@ -96,20 +97,19 @@ function getRiverName(latLng, map) {
 
         location: latLng,
 
-        radius: '1500', // Search within 1000 meters.
+        radius: '10000', // Search within 1000 meters.
 
-        keyword: 'river'
+        keyword: 'copper river, kenai river, nushagak, naknek river',
 
     };
-
- 
 
     var service = new google.maps.places.PlacesService(map);
 
     service.nearbySearch(request, function(results, status) {
 
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-            
+           window.alert (results[0].name);
+           
             if (results[0].name === "Copper River") {
               window.location.href = "/copper river";
             }
