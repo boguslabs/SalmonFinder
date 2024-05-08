@@ -79,12 +79,14 @@ async function initMap() {
 // When a marker is clicked, the getRiverName function will be called with the marker's position as an argument.
 // Now, when you click on any of the markers on the map, it will trigger the getRiverName function with the corresponding marker's position.
 
-  map.addListener("click", (e) => {
+ @* map.addListener("click", (e) => {
     getRiverName(e.latLng, map);
   });
 }
 
-function getRiverName(latLng, map) {
+function getRiverName(latLng, map) { *@
+
+  // above is the real stuff! Original before ChatGPT
 
     @* var map = new google.maps.Map(document.getElementById('map'), {
 
@@ -93,16 +95,56 @@ function getRiverName(latLng, map) {
 
     }); *@
 
-    var request = {
+ @*   var request = {
 
         location: latLng,
 
-        radius: '10000', // Search within 1000 meters.
+        radius: '100000', // Search within 1000 meters.
 
-        keyword: 'copper river, kenai river, nushagak, naknek river',
+        keyword: 'copper river'
 
+    }; *@
+
+map.addListener("click", (e) => {
+    getRiverName(e.latLng, map);
+});
+
+function getRiverName(latLng, map) {
+    // Request for Copper River
+    var requestCopper = {
+        location: latLng,
+        radius: '100000', // Search within 1000 meters.
+        keyword: 'copper river'
     };
 
+    // Request for Kenai River
+    var requestKenai = {
+        location: latLng,
+        radius: '100000', // Search within 1000 meters.
+        keyword: 'kenai river'
+    };
+
+    // Perform Places search for Copper River
+    var serviceCopper = new google.maps.places.PlacesService(map);
+    serviceCopper.nearbySearch(requestCopper, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+            // Extract and display information about Copper River
+            var copperRiverName = results[0].name;
+            alert("Copper River: " + copperRiverName);
+        } 
+    });
+
+    // Perform Places search for Kenai River
+    var serviceKenai = new google.maps.places.PlacesService(map);
+    serviceKenai.nearbySearch(requestKenai, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+            // Extract and display information about Kenai River
+            var kenaiRiverName = results[0].name;
+            alert("Kenai River: " + kenaiRiverName);
+        } 
+    });
+}
+// stuff for switching tabs! Expand....
     var service = new google.maps.places.PlacesService(map);
 
     service.nearbySearch(request, function(results, status) {
@@ -120,6 +162,6 @@ function getRiverName(latLng, map) {
 
 }
 
-initMap(); 
+initMap();
 
 </script>
