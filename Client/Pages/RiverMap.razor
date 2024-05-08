@@ -124,13 +124,27 @@ function getRiverName(latLng, map) {
         keyword: 'kenai river'
     };
 
+    // Request for Naknek River
+    var requestNaknek = {
+        location: latLng,
+        radius: '100000', // Search within 1000 meters.
+        keyword: 'naknek river'
+    };
+
+    // Request for Nushagak River
+    var requestNushagak = {
+        location: latLng,
+        radius: '100000', // Search within 1000 meters.
+        keyword: 'nushagak river'
+    };
+
     // Perform Places search for Copper River
     var serviceCopper = new google.maps.places.PlacesService(map);
     serviceCopper.nearbySearch(requestCopper, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
             // Extract and display information about Copper River
             var copperRiverName = results[0].name;
-            window.alert("Copper River: " + copperRiverName);
+            window.alert("Copper River");
         } 
     });
 
@@ -140,7 +154,27 @@ function getRiverName(latLng, map) {
         if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
             // Extract and display information about Kenai River
             var kenaiRiverName = results[0].name;
-            window.alert("Kenai River: " + kenaiRiverName);
+            window.alert("Kenai River");
+        } 
+    });
+
+     // Perform Places search for Naknek River
+    var serviceKenai = new google.maps.places.PlacesService(map);
+    serviceKenai.nearbySearch(requestNaknek, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+            // Extract and display information about Naknek River
+            var naknekRiverName = results[0].name;
+            window.alert("Naknek River");
+        } 
+    });
+
+     // Perform Places search for Nushagak River
+    var serviceNushagak = new google.maps.places.PlacesService(map);
+    serviceNushagak.nearbySearch(requestNushagak, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+            // Extract and display information about Nushagak River
+            var nushagakRiverName = results[0].name;
+            window.alert("Nushagak River");
         } 
     });
 }
