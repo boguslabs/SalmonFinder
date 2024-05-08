@@ -130,7 +130,7 @@ function getRiverName(latLng, map) {
         if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
             // Extract and display information about Copper River
             var copperRiverName = results[0].name;
-            alert("Copper River: " + copperRiverName);
+            window.alert("Copper River: " + copperRiverName);
         } 
     });
 
@@ -140,7 +140,7 @@ function getRiverName(latLng, map) {
         if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
             // Extract and display information about Kenai River
             var kenaiRiverName = results[0].name;
-            alert("Kenai River: " + kenaiRiverName);
+            window.alert("Kenai River: " + kenaiRiverName);
         } 
     });
 }
