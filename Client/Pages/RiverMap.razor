@@ -16,186 +16,75 @@
 <p>the map is above</p>
 
 <script>
-  (g=>
-  {var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))
+  (g => {
+    var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
   }
   )
-  ({
-    key: "AIzaSyA7ulU8xvpqjIPoAy4erd4glaNmvnvLnRw",
-    v: "weekly",
-    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
-    // Add other bootstrap parameters as needed, using camel case.
-  });
+    ({
+      key: "AIzaSyA7ulU8xvpqjIPoAy4erd4glaNmvnvLnRw",
+      v: "weekly",
+      // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+      // Add other bootstrap parameters as needed, using camel case.
+    });
 
 </script>
 
 
 <script>
 
-async function initMap() {
-  let map;
-  
-  const initialPosition = { lat: 61.2176, lng: -149.8997 };
-  const markerPositions = [
-    { lat: 60.3886, lng: -144.9608 }, // Copper River
-    { lat: 60.5439, lng: -151.2786 }, // Kenai River
-    { lat: 58.7994, lng: -158.6325 }, // Nushagak River
-    { lat: 58.7186, lng: -157.0656 }, // Naknek River
-    // Add more marker positions here
-  ];
+  async function initMap() {
+    let map;
 
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-  const {PlacesService} = await google.maps.importLibrary("places");
+    const initialPosition = { lat: 61.2176, lng: -149.8997 };
+    const markerPositions = [
+      { position: { lat: 60.3886, lng: -144.9608 }, name: "Copper River", path: "/copper river" },
+      { position: { lat: 60.5439, lng: -151.2786 }, name: "Kenai River", path: "/kenai river" },
+      { position: { lat: 58.7994, lng: -158.6325 }, name: "Nushagak River", path: "/nushagak river" },
+      { position: { lat: 58.7186, lng: -157.0656 }, name: "Naknek River", path: "/naknek river" },
+      // Add more marker positions here
+    ];
 
-  map = new Map(document.getElementById("map"), {
-    center: initialPosition,
-    zoom: 4,
-    mapId: "Salmon Finder",
-  });
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { PlacesService } = await google.maps.importLibrary("places");
 
-  // Create markers for each position
-  markerPositions.forEach(position => {
-    new AdvancedMarkerElement({
-      map: map,
-      position: position,
-      title: "Marker",
-    });
-  });
-
-
-    // Add click event listener to each marker (This is the stuff that Chat GPT recommended, but it broke when I tried it)
-  @*  marker.addListener("click", () => {
-      getRiverName(position);
-    });
-  });
-
-  map.addListener("click", (e) => {
-    getRiverName(e.latLng);
-  });
-} *@
-
-// In this modified version, after creating each marker, I've attached a click event listener to it. 
-// When a marker is clicked, the getRiverName function will be called with the marker's position as an argument.
-// Now, when you click on any of the markers on the map, it will trigger the getRiverName function with the corresponding marker's position.
-
- @* map.addListener("click", (e) => {
-    getRiverName(e.latLng, map);
-  });
-}
-
-function getRiverName(latLng, map) { *@
-
-  // above is the real stuff! Original before ChatGPT
-
-    @* var map = new google.maps.Map(document.getElementById('map'), {
-
-        center: latLng,
-        
-
-    }); *@
-
- @*   var request = {
-
-        location: latLng,
-
-        radius: '100000', // Search within 1000 meters.
-
-        keyword: 'copper river'
-
-    }; *@
-
-map.addListener("click", (e) => {
-    getRiverName(e.latLng, map);
-});
-
-function getRiverName(latLng, map) {
-    // Request for Copper River
-    var requestCopper = {
-        location: latLng,
-        radius: '100000', // Search within 1000 meters.
-        keyword: 'copper river'
-    };
-
-    // Request for Kenai River
-    var requestKenai = {
-        location: latLng,
-        radius: '100000', // Search within 1000 meters.
-        keyword: 'kenai river'
-    };
-
-    // Request for Naknek River
-    var requestNaknek = {
-        location: latLng,
-        radius: '100000', // Search within 1000 meters.
-        keyword: 'naknek river'
-    };
-
-    // Request for Nushagak River
-    var requestNushagak = {
-        location: latLng,
-        radius: '100000', // Search within 1000 meters.
-        keyword: 'nushagak river'
-    };
-
-    // Perform Places search for Copper River
-    var serviceCopper = new google.maps.places.PlacesService(map);
-    serviceCopper.nearbySearch(requestCopper, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-            // Extract and display information about Copper River
-            var copperRiverName = results[0].name;
-            window.alert("Copper River");
-        } 
+    map = new Map(document.getElementById("map"), {
+      center: initialPosition,
+      zoom: 4,
+      mapId: "Salmon Finder",
     });
 
-    // Perform Places search for Kenai River
-    var serviceKenai = new google.maps.places.PlacesService(map);
-    serviceKenai.nearbySearch(requestKenai, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-            // Extract and display information about Kenai River
-            var kenaiRiverName = results[0].name;
-            window.alert("Kenai River");
-        } 
+    // Create markers for each position
+    markerPositions.forEach(p => {
+      new AdvancedMarkerElement({
+        map: map,
+        position: p.position,
+        title: p.Name,
+      });
     });
 
-     // Perform Places search for Naknek River
-    var serviceKenai = new google.maps.places.PlacesService(map);
-    serviceKenai.nearbySearch(requestNaknek, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-            // Extract and display information about Naknek River
-            var naknekRiverName = results[0].name;
-            window.alert("Naknek River");
-        } 
-    });
+    map.addListener("click", (e) => {
 
-     // Perform Places search for Nushagak River
-    var serviceNushagak = new google.maps.places.PlacesService(map);
-    serviceNushagak.nearbySearch(requestNushagak, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-            // Extract and display information about Nushagak River
-            var nushagakRiverName = results[0].name;
-            window.alert("Nushagak River");
-        } 
-    });
-}
-// stuff for switching tabs! Expand....
-    var service = new google.maps.places.PlacesService(map);
+      markerPositions.forEach(p => {
+        var request = {
+          location: e.latLng,
+          radius: '100000', // Search within 1000 meters.
+          keyword: p.name
+        };
 
-    service.nearbySearch(request, function(results, status) {
-
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-           window.alert (results[0].name);
-           
-            if (results[0].name === "Copper River") {
-              window.location.href = "/copper river";
+        // Perform Places search
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+            if (p.name == results[0].name) {
+              window.location.href = p.path;
             }
-
-        }
-
+          }
+        });
+      });
     });
+  }
 
-}
-
-initMap();
+  initMap();
 
 </script>

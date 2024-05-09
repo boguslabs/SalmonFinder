@@ -1,4 +1,4 @@
-﻿@page "/kenai river"
+﻿@page "/nushagak river"
 @using RiverCsvReader.Models;
 @using System.Globalization;
 @using System.Text;
@@ -9,7 +9,7 @@
 
 <h3>Overall Map</h3>
 
-<p>Map of the kenai river</p>
+<p>Map of the nushagak river</p>
 
 <div id="map"></div>
 
@@ -34,12 +34,12 @@
 async function initMap() {
   let map;
   
-  const position = { lat: 60.5439, lng: -151.2786 };
+  const position = { lat: 58.7994, lng: -158.6325 };
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
   map = new Map(document.getElementById("map"), {
-    center: { lat: 60.5439, lng: -151.2786 },
+    center: { lat: 58.7994, lng: -158.6325 },
     zoom: 6,
     mapId: "Salmon Finder",
   });
