@@ -6,18 +6,25 @@
 @inject HttpClient Http
 
 <h3>Salmon Data</h3>
-<ul>
-    @foreach (var item in listOfRivers)
+
+<table>
+    <tr> 
+        <th>Name</th>
+        <th>Date</th>
+        <th>Population</th>
+    </tr>
+    @foreach (var item in listOfRivers.Where (i => i.Name == "Copper River"))
     {
-      <li>
-        Name - @item.Name,
-        Date - @item.Date,
-        Population - @item.Population,
-      </li>
+      <tr>
+        <td>@item.Name</td>
+        <td>@item.Date</td>
+        <td>@item.Population</td>
+      </tr>
     }
-</ul>
+</table>
 @code {
-    List<River> listOfRivers = new List<River>();
+ List<River> listOfRivers = new List<River>();
+
 protected override async Task OnInitializedAsync()
     {
         string csvRivers = await Http.GetStringAsync("http://localhost:5000/sample-data/Salmon Fish Data - Alaska.csv");

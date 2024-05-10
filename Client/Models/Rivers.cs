@@ -1,5 +1,6 @@
 namespace RiverCsvReader.Models
 {
+    
     public class River
     {
         public string Name { get; set; }

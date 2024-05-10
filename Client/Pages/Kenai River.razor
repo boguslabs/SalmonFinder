@@ -59,3 +59,44 @@ async function initMap() {
 initMap(); 
 
 </script>
+
+<h3>Salmon Data</h3>
+
+<table>
+    <tr> 
+        <th>Name</th>
+        <th>Date</th>
+        <th>Population</th>
+    </tr>
+    @foreach (var item in listOfRivers.Where (i => i.Name == "Kenai River"))
+    {
+      <tr>
+        <td>@item.Name</td>
+        <td>@item.Date</td>
+        <td>@item.Population</td>
+      </tr>
+    }
+</table>
+@code {
+ List<River> listOfRivers = new List<River>();
+
+protected override async Task OnInitializedAsync()
+    {
+        string csvRivers = await Http.GetStringAsync("http://localhost:5000/sample-data/Salmon Fish Data - Alaska.csv");
+        List<string> riversRows = csvRivers.Split("\n").ToList();
+        for (int i = 0; i < riversRows.Count; i++)
+        {
+            if (i > 0) // Ignore 1st row which is column headers
+            {
+                 List<string> riverStringList = riversRows[i].Split(",").ToList();
+                 
+                 River river = new River(
+                     riverStringList[0],
+                     int.Parse(riverStringList[1]),
+                     int.Parse(riverStringList[2])
+                 );
+                listOfRivers.Add(river);
+            }
+        }
+    }
+}
